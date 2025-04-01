@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="login-screen">
+            <div class="welcome-title">Welcome to Quick Chat</div>
+            <div id="username-error" class="error"></div>
+            <input type="text" id="username" placeholder="Enter your username" maxlength="20">
+            <button onclick="enterChat()">Next</button>
+        </div>
+
+        <div id="chat-selection" class="hidden">
+            <h2>Select Chat Type</h2>
+            <button onclick="hostRoom()">Host a Room</button>
+            <button onclick="showJoinRoom()">Join a Room</button>
+        </div>
+
+        <div id="join-room" class="hidden">
+            <h2>Enter Room Code</h2>
+            <div id="room-error" class="error"></div>
+            <input type="text" id="room-code" placeholder="Enter 6-digit code" maxlength="6">
+            <button onclick="joinRoom()">Join</button>
+            <button onclick="backToSelection()">Back</button>
+        </div>
+
+        <div id="chat-room" class="hidden">
+            <h2>Chat Room <span id="room-id"></span>
+                <button onclick="copyRoomCode()" class="copy-button">Copy Code</button>
+            </h2>
+            <div id="messages"></div>
+            <div class="chat-input-container">
+                <input type="text" id="message" placeholder="Type a message" maxlength="500">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
