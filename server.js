@@ -18,9 +18,11 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
     credentials: true
   },
-  pingTimeout: 60000,
+  pingTimeout: 60000,        // Increase ping timeout
+  pingInterval: 25000,       // Add ping interval
   connectTimeout: 45000,
-  maxHttpBufferSize: 1e6 // 1MB max message size
+  maxHttpBufferSize: 1e6,    // 1MB max message size
+  transports: ['websocket', 'polling']  // Add polling as fallback
 });
 
 app.use(cors());

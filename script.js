@@ -413,17 +413,51 @@ socket.on("forceDisconnect", () => {
     addSystemMessage("Room has been closed by the host.");
 });
 
-// Add reconnection handling
-socket.on('connect_error', (error) => {
-  addSystemMessage('Connection error. Attempting to reconnect...');
+// Add these near the top of your script.js file
+let isConnected = true;
+let reconnectAttempts = 0;
+const maxReconnectAttempts = 5;
+
+// Update the socket initialization
+const socket = io({
+    reconnection: true,
+    reconnectionAttempts: maxReconnectAttempts,
+    reconnectionDelay: 1000,
+    reconnectionDelayMax: 5000,
+    timeout: 20000,
+});
+
+// Add these event listeners
+socket.on('connect', () => {
+    isConnected = true;
+    reconnectAttempts = 0;
+    if (roomCode) {
+        socket.emit("joinRoom", { roomCode, username });
+    }
+});
+
+socket.on('disconnect', () => {
+    isConnected = false;
+    addSystemMessage("Connection lost. Attempting to reconnect...");
 });
 
 socket.on('reconnect', (attemptNumber) => {
-  addSystemMessage('Reconnected to server!');
-  if (roomCode) {
-    // Rejoin room after reconnection
-    socket.emit("joinRoom", { roomCode, username });
-  }
+    isConnected = true;
+    addSystemMessage("Reconnected to server!");
+    if (roomCode) {
+        socket.emit("joinRoom", { roomCode, username });
+    }
+});
+
+socket.on('reconnect_failed', () => {
+    addSystemMessage("Failed to reconnect. Please refresh the page.");
+});
+
+// Add visibility change handler
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && !isConnected) {
+        socket.connect();
+    }
 });
 
 // Add message retry mechanism
