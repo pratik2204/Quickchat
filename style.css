@@ -10,7 +10,8 @@ body {
     margin: 0;
     padding: 20px;
     font-family: 'Courier New', monospace;
-    background-color: #c0c0c0;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/minecraft-bg1.jpg') no-repeat center center fixed;
+    background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,7 +19,7 @@ body {
 }
 
 .container {
-    background: #c0c0c0;
+    background: rgba(192, 192, 192, 0.95); /* Increased opacity for better contrast */
     padding: 20px;
     border: 3px solid black;
     box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.6);
@@ -146,7 +147,7 @@ button.keyboard-selected:hover {
     margin: 10px 0;
     padding: 10px;
     border: 2px solid black;
-    background: #c0c0c0;
+    background: rgba(192, 192, 192, 0.95); /* Making messages slightly transparent */
     word-wrap: break-word;
     overflow-wrap: break-word;
     white-space: pre-wrap;
